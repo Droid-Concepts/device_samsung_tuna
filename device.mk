@@ -118,6 +118,10 @@ PRODUCT_COPY_FILES += \
 	device/samsung/tuna/sii9234_rcp.kl:system/usr/keylayout/sii9234_rcp.kl \
 	device/samsung/tuna/sii9234_rcp.kcm:system/usr/keychars/sii9234_rcp.kcm
 
+# Droid Concepts bootanimation...Credit JaeKar
+PRODUCT_COPY_FILES +=  \
+    vendor/Droid_Concepts/prebuilt/common/media/xhdpi/bootanimation.zip:system/media/bootanimation.zip
+
 # Input device calibration files
 PRODUCT_COPY_FILES += \
 	device/samsung/tuna/Melfas_MMSxxx_Touchscreen.idc:system/usr/idc/Melfas_MMSxxx_Touchscreen.idc
