@@ -20,15 +20,19 @@ import org.cyanogenmod.hardware.util.FileUtils;
 import java.io.File;
 
 public class DisplayColorCalibration {
+
     private static final String[] FILE_PATH = new String[] {
             "/sys/class/misc/samoled_color/red_multiplier",
             "/sys/class/misc/samoled_color/green_multiplier",
             "/sys/class/misc/samoled_color/blue_multiplier"
     };
 
+    // Align MAX_VALUE with Voodoo Control settings
+    private static final int MAX_VALUE = 2000000000;
+
     public static boolean isSupported() {
-        for (String filePath : FILE_PATH) {
-            if (!new File(filePath).exists()) {
+        for (String i : FILE_PATH) {
+            if (!new File(i).exists()) {
                 return false;
             }
         }
@@ -36,27 +40,24 @@ public class DisplayColorCalibration {
     }
 
     public static int getMaxValue()  {
-        return 2000000000;
+        return MAX_VALUE;
     }
-
     public static int getMinValue()  {
         return 0;
     }
-
     public static String getCurColors()  {
-        StringBuilder values = new StringBuilder();
+        StringBuilder colors = new StringBuilder();
         for (String filePath : FILE_PATH) {
-            values.append(FileUtils.readOneLine(filePath)).append(" ");
+            colors.append(FileUtils.readOneLine(filePath)).append(" ");
         }
-        return values.toString();
+        return colors.toString();
     }
-
     public static boolean setColors(String colors)  {
-        String[] valuesSplit = colors.split(" ");
+        String[] colorsSplit = colors.split(" ");
         boolean result = true;
-        for (int i = 0; i < valuesSplit.length; i++) {
-            String targetFile = FILE_PATH[i];
-            result &= FileUtils.writeLine(targetFile, valuesSplit[i]);
+        for (int i = 0; i < 3; i++) {
+            String currentFile = FILE_PATH[i];
+            result &= FileUtils.writeLine(currentFile, colorsSplit[i]);
         }
         return result;
     }
